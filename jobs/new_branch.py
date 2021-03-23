@@ -9,7 +9,7 @@ class NewBranch(Job):
 
     class Meta:
         name = "New Branch"
-        description = "Provision a new branch site"
+        descriptio = "Provision a new branch site"
         field_order = ['site_name', 'switch_count', 'switch_model']
 
     site_name = StringVar(

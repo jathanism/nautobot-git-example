@@ -1,7 +1,7 @@
 from django.utils.text import slugify
 
-from nautobot.dcim.choices import DeviceStatusChoices, SiteStatusChoices
 from nautobot.dcim.models import Device, DeviceRole, DeviceType, Manufacturer, Site
+from nautobot.extras.models import Status
 from nautobot.extras.jobs import *
 
 
@@ -37,7 +37,7 @@ class NewBranch(Job):
         site = Site(
             name=data['site_name'],
             slug=slugify(data['site_name']),
-            status=SiteStatusChoices.STATUS_PLANNED
+            status=Status.objects.get(name='planned'),
         )
         site.validated_save()
         self.log_success(obj=site, message="Created new site")
@@ -49,7 +49,7 @@ class NewBranch(Job):
                 device_type=data['switch_model'],
                 name=f'{site.slug}-switch{i}',
                 site=site,
-                status=DeviceStatusChoices.STATUS_PLANNED,
+                status=Status.objects.get(name='planned'),
                 device_role=switch_role
             )
             switch.validated_save()

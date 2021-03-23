@@ -37,7 +37,7 @@ class NewBranch(Job):
         site = Site(
             name=data['site_name'],
             slug=slugify(data['site_name']),
-            status=Status.objects.get(name='planned'),
+            status=Status.objects.get(slug='planned'),
         )
         site.validated_save()
         self.log_success(obj=site, message="Created new site")
@@ -49,7 +49,7 @@ class NewBranch(Job):
                 device_type=data['switch_model'],
                 name=f'{site.slug}-switch{i}',
                 site=site,
-                status=Status.objects.get(name='planned'),
+                status=Status.objects.get(slug='planned'),
                 device_role=switch_role
             )
             switch.validated_save()
